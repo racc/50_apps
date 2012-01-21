@@ -21,25 +21,29 @@ def crawl(urls, depth, regexes, urls_seen=set([])):
 		links = [tag['href'] for tag in soup.findAll('a', href=True)]
 
 		#Fix Local Links
-		fixed_links = [fix_link(this_url, link) for link in links]
+		filtered_links = [filter_link(link) for link in links]
+		fixed_links = [fix_link(this_url, link) for link in filtered_links if link]
 
 		for link in fixed_links:
 			if link not in urls_seen:
 				urls_seen.add(link)	
-
-				try:
-					crawl(urls + [link], depth - 1, regexes, urls_seen)
-				except (RuntimeError, urllib2.URLError):
-					print('Error processing URL: %s' % this_url)
+				crawl(urls + [link], depth - 1, regexes, urls_seen)
 				
 	except (RuntimeError, urllib2.URLError):
 		print('Error processing URL: %s' % this_url)
+		return
 
 def fix_link(base_url, link):
 	if link.startswith('http'):
 		return link
 	else:
 		return base_url + '/' + link	
+
+def filter_link(link):
+	if link.startswith('mailto'):
+		return None
+	else:
+		return link
 
 parser = argparse.ArgumentParser(description='Crawl through all links on the page and scan deep for a given level of depth')
 parser.add_argument("-u", "--url", required=True, help="The Base URL")
