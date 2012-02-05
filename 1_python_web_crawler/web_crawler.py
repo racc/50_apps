@@ -1,49 +1,7 @@
 #!/usr/bin/python2.7
 
 import argparse, urllib2, re
-from BeautifulSoup import BeautifulSoup
-
-def crawl(urls, depth, regexes, urls_seen=set([])):
-	if (depth == 0):
-		return
-
-	this_url = urls[-1]
-
-	try:
-		html = urllib2.urlopen(this_url).read()
-
-		for regex in regexes:
-			matches = regex.findall(html)
-			if (matches):
-				print('%s matches %s (%d hits)' % ("->".join(urls), regex.pattern, len(matches)))
-
-		soup = BeautifulSoup(html)
-		links = [tag['href'] for tag in soup.findAll('a', href=True)]
-
-		#Fix Local Links
-		filtered_links = [filter_link(link) for link in links]
-		fixed_links = [fix_link(this_url, link) for link in filtered_links if link]
-
-		for link in fixed_links:
-			if link not in urls_seen:
-				urls_seen.add(link)	
-				crawl(urls + [link], depth - 1, regexes, urls_seen)
-				
-	except (RuntimeError, urllib2.URLError):
-		print('Error processing URL: %s' % this_url)
-		return
-
-def fix_link(base_url, link):
-	if link.startswith('http'):
-		return link
-	else:
-		return base_url + '/' + link	
-
-def filter_link(link):
-	if link.startswith('mailto'):
-		return None
-	else:
-		return link
+from crawler import Crawler
 
 parser = argparse.ArgumentParser(description='Crawl through all links on the page and scan deep for a given level of depth')
 parser.add_argument("-u", "--url", required=True, help="The Base URL")
@@ -53,4 +11,5 @@ args = parser.parse_args()
 
 regexes = [re.compile(string) for string in args.strings]
 
-crawl([args.url], args.depth, regexes)
+for hit in Crawler.crawl([args.url], args.depth, regexes):
+	print(('%s matches %s (%d hits)' % ("->".join(hit[0]), hit[1], hit[2])))
