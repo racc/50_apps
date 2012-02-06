@@ -6,7 +6,7 @@ class Crawler:
 	def crawl(cls, urls, depth, regexes, urls_seen=set([])):
 		if (depth == 0):
 			return
-	
+
 		this_url = urls[-1]
 	
 		try:
@@ -27,8 +27,9 @@ class Crawler:
 			for link in fixed_links:
 				if link not in urls_seen:
 					urls_seen.add(link)	
-					cls.crawl(urls + [link], depth - 1, regexes, urls_seen)
-					
+					for crawl in cls.crawl(urls + [link], depth - 1, regexes, urls_seen):
+						yield crawl
+
 		except (RuntimeError, urllib2.URLError):
 			print('Error processing URL: %s' % this_url)
 			return
