@@ -22,6 +22,7 @@ INSTALLED_APPS = (
     'autoload',
     'dbindexer',
 		'bootstrapped',
+		'bootstrapforms',
 
     # djangoappengine should come last, so it can override a few manage.py commands
     'djangoappengine',
@@ -51,5 +52,5 @@ TEMPLATE_DIRS = (os.path.join(os.path.dirname(__file__), 'templates'),)
 
 ROOT_URLCONF = 'urls'
 
-STATIC_ROOT = '/home/jason/Work/50_apps/2_python_web_app/static/'
+STATIC_ROOT = ''
 STATIC_URL = '/static/'
