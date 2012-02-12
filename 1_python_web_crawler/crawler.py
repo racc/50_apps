@@ -9,6 +9,7 @@ class Crawler:
 			return
 
 		this_url = urls[-1]
+		urls_seen.add(this_url)
 		parsed = urlsplit(this_url)
 	
 		try:
@@ -18,13 +19,12 @@ class Crawler:
 				return	
 
 			html = resp.read()
-	
-			for regex in regexes:
-				matches = regex.findall(html)
-				if (matches):
-					yield (urls, regex.pattern, len(matches))
-	
 			soup = BeautifulSoup(html)
+			for regex in regexes:
+				res = soup.findAll(text=regex)
+				if (res):
+					yield (urls, regex.pattern, len(res))
+	
 			links = [urlsplit(tag['href']) for tag in soup.findAll('a', href=True)]
 	
 			#Fix local links, and filter invalid links
@@ -33,7 +33,6 @@ class Crawler:
 	
 			for link in fixed_links:
 				if link not in urls_seen:
-					urls_seen.add(link)	
 					for crawl in cls.crawl(urls + [link], depth - 1, regexes, urls_seen):
 						yield crawl
 
