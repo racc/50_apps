@@ -6,6 +6,7 @@
     xml:lang="{% firstof LANGUAGE_CODE 'en' %}"
     lang="{% firstof LANGUAGE_CODE 'en' %}">
   <head>
+
     <title>{% block title %}{% endblock %}</title>
 
 		{% load bootstrap %}
@@ -20,35 +21,36 @@
   </head>
 
   <body>
-    <div id="header">
-      <a id="logo" href="/">Webcrawler App</a>
+    <div id="container">
+			<div class="topbar">
+				<div class="fill">
+					<div class="container">
+						<a class="brand" href="../../">Webcrawler App</a>
+						<ul class="nav">
+							{% block nav %}
+							{% endblock nav %}
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div id="main" role="main" class="container">
+    	    {% block content-header %}
+    	      {% if error %}<div class="alert alert-error">{{ error }}</div>{% endif %}
+    	      {% if info %}<div class="alert alert-info">{{ info }}</div>{% endif %}
+    	      {% if messages %}
+    	        {% for message in messages %}
+    	          <div class="alert alert-info">{{ message }}</div>
+    	        {% endfor %}
+    	      {% endif %}
+    	    {% endblock %}
+
+    	    {% block content %}{% endblock %}
+
+				<footer>
+    	  <p>Powered by <a href="http://www.allbuttonspressed.com/projects/django-nonrel">Django-nonrel</a>, v3</p>
+				</footer>
+    	</div>
     </div>
-
-    <div class="columns">
-      <div id="content" class="column">
-        {% block content-header %}
-          {% if error %}<div class="error">{{ error }}</div>{% endif %}
-          {% if info %}<div class="info">{{ info }}</div>{% endif %}
-          {% if messages %}
-            {% for message in messages %}
-              <div class="info">{{ message }}</div>
-            {% endfor %}
-          {% endif %}
-        {% endblock %}
-
-        {% block content %}{% endblock %}
-      </div>
-
-      <div id="sidebar" class="column">
-        {% block sidebar %}
-        {% endblock %}
-      </div>
-    </div>
-
-    <div id="footer">
-      <p>Powered by <a href="http://www.allbuttonspressed.com/projects/django-nonrel">Django-nonrel</a></p>
-    </div>
-
     {% block js %}
     {% endblock %}
   </body>

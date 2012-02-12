@@ -5,9 +5,10 @@ from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django import forms
 from crawler import Crawler
+from bootstrapforms.forms import BootstrapForm, Fieldset
 import re
 
-class CrawlForm(forms.Form):
+class CrawlForm(BootstrapForm):
 	url = forms.CharField()
 	search_strings = forms.CharField(max_length=100)
 	depth = forms.IntegerField()
