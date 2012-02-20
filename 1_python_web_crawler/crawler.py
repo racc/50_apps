@@ -1,6 +1,8 @@
 import urllib2
 from urlparse import urlsplit, SplitResult
 from BeautifulSoup import BeautifulSoup 
+import StringIO
+import gzip
 
 class Crawler:
 	@classmethod
@@ -15,9 +17,10 @@ class Crawler:
 		try:
 			req = urllib2.Request(this_url)
 			resp = urllib2.urlopen(req)
-			if (resp.info().getmaintype() != 'text'):
+			headers = resp.info()
+			if (headers.getmaintype() != 'text'):
 				return	
-
+			
 			html = resp.read()
 			soup = BeautifulSoup(html)
 			for regex in regexes:
@@ -36,7 +39,7 @@ class Crawler:
 					for crawl in cls.crawl(urls + [link], depth - 1, regexes, urls_seen):
 						yield crawl
 
-		except (RuntimeError, urllib2.URLError):
+		except (RuntimeError, urllib2.URLError, IOError):
 			print('Error processing URL: %s' % this_url)
 		return
 	
