@@ -1,5 +1,5 @@
 application: raccs-web-crawler
-version: 2
+version: 3
 runtime: python27
 api_version: 1
 threadsafe: yes
@@ -25,6 +25,9 @@ handlers:
 - url: /media/admin
   static_dir: django/contrib/admin/media
   expiration: '0'
+
+- url: /static
+  static_dir: static
 
 - url: /.*
   script: djangoappengine.main.application

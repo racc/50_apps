@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Webcrawler!{% endblock %}
+{% block content %}
+<div class="hero-unit">
+	<h2> Webcrawler! <h2>
+	<p>Crawl through all links from a starting particular url, searching to a specified depth and for a particular term.</p>
+</div>
+
+<div class="container">
+	<form action="/crawl_form/" method="post" class="form-horizontal"> {% csrf_token %}
+	{{ form }}
+		<div class="form-actions">
+	    <button type="submit" class="btn btn-primary">Go!</button>
+	  </div>
+	</form>
+</div>
+{% endblock %}

@@ -1,12 +1,26 @@
 {% extends 'base.html' %}
-{% block title %}Webcrawler!{% endblock %}
+{% block title %}Django Web Tools Home{% endblock %}
 {% block content %}
-<h1> Webcrawler! <h1>
-<form action="/" method="post" class="form-horizontal"> {% csrf_token %}
 
-{{ form }}
-	<div class="form-actions">
-    <button type="submit" class="btn btn-primary">Go!</button>
-  </div>
-</form>
+<div class="hero-unit">
+<h2>Django Web Tools!</h2>
+<p>
+Hello!  This site was created as part of the <a href='http://50apps.org'>50 Apps</a> Project.
+</p>
+<p>
+	It features some very hacked up python web tools which you might find interesting...	
+</p>
+</div>
+
+<div id="about" class="row">
+	<div class="span6">
+			<h2>Webcrawler</h2>
+			<p>A tool which crawls through a web page's links, in search of a particular term.</p>
+	</div>
+
+	<div class="span6">
+			<h2>Word Counter</h2>
+			<p>Visits a particular page and tallys up the frequency of words on that page in a pretty histogram.</p>
+	</div>
+</div>
 {% endblock %}

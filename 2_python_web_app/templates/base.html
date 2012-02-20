@@ -25,27 +25,17 @@
 			<div class="topbar">
 				<div class="fill">
 					<div class="container">
-						<a class="brand" href="../../">Webcrawler App</a>
+						<a class="brand" href="../../">Django Web Tools</a>
 						<ul class="nav">
-							{% block nav %}
-							{% endblock nav %}
+							<li><a href="../../">Home</a></li>
+							<li><a href="../../crawl_form">Webcrawler</a></li>
+							<li><a href="../../wordcount_form">Word Counter</a></li>
 						</ul>
 					</div>
 				</div>
 			</div>
 			<div id="main" role="main" class="container">
-    	    {% block content-header %}
-    	      {% if error %}<div class="alert alert-error">{{ error }}</div>{% endif %}
-    	      {% if info %}<div class="alert alert-info">{{ info }}</div>{% endif %}
-    	      {% if messages %}
-    	        {% for message in messages %}
-    	          <div class="alert alert-info">{{ message }}</div>
-    	        {% endfor %}
-    	      {% endif %}
-    	    {% endblock %}
-
     	    {% block content %}{% endblock %}
-
 				<footer>
     	  <p>Powered by <a href="http://www.allbuttonspressed.com/projects/django-nonrel">Django-nonrel</a>, v3</p>
 				</footer>

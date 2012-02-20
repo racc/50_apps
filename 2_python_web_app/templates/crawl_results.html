@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Results{% endblock %}
+{% block content %}
+<div class='hero-unit'>
+	<h2>Searched on <strong>{{url}}</strong>, for <strong>{{search}}</strong> at a depth of <strong>{{depth}}</strong></h2>
+</div>
+<table class=".table-striped">
+	<thead>
+    <tr>
+    	<th>Chain</th>
+    	<th>Match Term</th>
+    	<th>Hit count</th>
+    </tr>
+  </thead>
+  <tbody>
+	{% for res in results %}
+  	<tr>
+			<td>
+			{% for url_hit in res.0 %}
+				<a href="{{url_hit}}">{{url_hit}}</a> >>
+			{% endfor %}
+			</td>
+			<td>{{res.1}}</td>
+			<td>{{res.2}}</td>
+  	</tr>
+	{% endfor %}
+  </tbody>
+</table>
+{% endblock %}
