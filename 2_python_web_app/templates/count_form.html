@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Word Counter!{% endblock %}
+{% block content %}
+<div class="hero-unit">
+	<h2> Word Counter! <h2>
+	<p>Count all words on a web page and display them in a pretty histogram</p> 
+</div>
+
+<div class="container">
+	<form action="/count_form/" method="post" class="form-horizontal"> {% csrf_token %}
+	{{ form }}
+		<div class="form-actions">
+	    <button type="submit" class="btn btn-primary">Go!</button>
+	  </div>
+	</form>
+</div>
+{% endblock %}

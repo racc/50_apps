@@ -7,4 +7,6 @@ urlpatterns = patterns('',
     ('^$', 'views.home'),
     ('^crawl_form/', 'crawl.form'),
     ('^crawl/', 'crawl.crawl'),
+    ('^count_form/', 'count.form'),
+    ('^count/', 'count.count'),
 )

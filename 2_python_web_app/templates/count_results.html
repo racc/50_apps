@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block extra-head %}
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Words');
+        data.addColumn('number', 'Count');
+        data.addRows([
+				{% for res in results %}	
+					{% if forloop.last %}
+					["{{res.0}}", {{res.1}}]
+					{% else %}
+          ["{{res.0}}", {{res.1}}],
+					{% endif %}
+				{% endfor %}
+        ]);
+
+        var options = {
+          title: 'Word count',
+					chartArea: {top: 0},
+					height: 30000,
+					fontSize: 14,
+          vAxis: {title: 'Words',  titleTextStyle: {color: 'red'}}
+        };
+
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+{% endblock %}
+
+{% block title %}Results{% endblock %}
+{% block content %}
+<div class='hero-unit'>
+	<h2>Word count on <strong>{{url}}</strong></h2>
+</div>
+
+<div id="chart_div" align="center" style="width: 900px; height: 1000px;"></div>
+
+{% endblock %}
